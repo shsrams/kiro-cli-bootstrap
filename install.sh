@@ -8,6 +8,12 @@ if [ -f "mcp.json" ]; then
     echo "Copied mcp.json to ~/.aws/amazonq/"
 fi
 
+# Create symlink for q-skills script
+if [ -f "q-skills" ]; then
+    ln -sf "$PWD/q-skills" ~/.aws/amazonq/q-skills
+    echo "Created symlink: ~/.aws/amazonq/q-skills -> $PWD/q-skills"
+fi
+
 for dir in */; do
     if [ -d "$dir" ]; then
         dirname=$(basename "$dir")

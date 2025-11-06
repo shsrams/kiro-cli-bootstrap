@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SKILLS_DIR="$SCRIPT_DIR/skills"
+
+extract_frontmatter() {
+    local file="$1"
+    local key="$2"
+    
+    if [ -f "$file" ]; then
+        # Extract value from YAML frontmatter
+        awk -v key="$key" '
+        BEGIN { in_frontmatter=0; found=0 }
+        /^---$/ { 
+            if (in_frontmatter) exit
+            in_frontmatter=1; next 
+        }
+        in_frontmatter && $0 ~ "^" key ":" { 
+            gsub("^" key ":[[:space:]]*", "")
+            gsub("\"", "")
+            print $0
+            found=1
+        }
+        ' "$file"
+    fi
+}
+
+case "$1" in
+    "list")
+        echo "Available Q CLI Skills:"
+        echo "======================"
+        echo ""
+        
+        if [ ! -d "$SKILLS_DIR" ]; then
+            echo "No skills directory found at $SKILLS_DIR"
+            exit 0
+        fi
+        
+        for skill_dir in "$SKILLS_DIR"/*; do
+            if [ -d "$skill_dir" ] && [ -f "$skill_dir/SKILL.md" ]; then
+                skill_name=$(basename "$skill_dir")
+                description=$(extract_frontmatter "$skill_dir/SKILL.md" "description")
+                when_to_use=$(extract_frontmatter "$skill_dir/SKILL.md" "when_to_use")
+                
+                echo "$skill_name"
+                [ -n "$description" ] && echo "  $description"
+                [ -n "$when_to_use" ] && echo "  When to use: $when_to_use"
+                echo ""
+            fi
+        done
+        
+        echo "Usage: q-skills use <skill-name> to load a skill"
+        ;;
+        
+    "use")
+        skill_name="$2"
+        if [ -z "$skill_name" ]; then
+            echo "Usage: q-skills use <skill-name>"
+            exit 1
+        fi
+        
+        skill_file="$SKILLS_DIR/$skill_name/SKILL.md"
+        if [ -f "$skill_file" ]; then
+            echo "# Loading skill: $skill_name"
+            echo "# ================================"
+            echo ""
+            
+            # Skip frontmatter and show content
+            awk '
+            BEGIN { in_frontmatter=0; frontmatter_ended=0 }
+            /^---$/ { 
+                if (in_frontmatter) { frontmatter_ended=1; next }
+                in_frontmatter=1; next 
+            }
+            frontmatter_ended || !in_frontmatter { print }
+            ' "$skill_file"
+        else
+            echo "Skill not found: $skill_name"
+            echo ""
+            echo "Available skills:"
+            "$0" list
+        fi
+        ;;
+        
+    *)
+        echo "Q CLI Skills Manager"
+        echo "Usage:"
+        echo "  q-skills list           # List all available skills"
+        echo "  q-skills use <name>     # Load and display a specific skill"
+        echo ""
+        echo "Skills are stored in: $SKILLS_DIR"
+        ;;
+esac
