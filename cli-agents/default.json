@@ -1,0 +1,14 @@
+{
+  "name": "default",
+  "description": "Global default agent with node_modules and .git exclusions",
+  "toolsSettings": {
+    "fs_read": {
+      "deniedPaths": [
+        "**/node_modules/**",
+        "**/node_modules",
+        ".git/**",
+        "**/.git/**"
+      ]
+    }
+  }
+}
