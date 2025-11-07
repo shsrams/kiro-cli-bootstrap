@@ -80,6 +80,8 @@ Review the implementation plan with the user and refine based on feedback.
   - Begin implementation following the plan
   - Modify the plan based on new requirements
   - Return to design refinement if gaps are identified
+  - Create detailed step guides for implementation
+- If user chooses to create step guides, you MUST use your 'create-step-guide' SKILL for each step in the implementation plan
 - You MUST NOT automatically proceed to implementation without explicit user direction
 
 ## Key Principles

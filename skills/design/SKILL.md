@@ -98,6 +98,7 @@ Review the design with the user and refine based on feedback.
   - Return to requirements clarification (if gaps identified)
   - Conduct additional research (if new questions emerged)
   - Proceed to implementation planning (if design is complete)
+- If user chooses to proceed to implementation planning, you MUST use your 'write-plan' SKILL against the design document to create an implementation plan
 - You MUST NOT automatically proceed to the next step without explicit user direction
 
 ## Key Principles

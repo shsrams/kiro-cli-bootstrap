@@ -75,6 +75,7 @@ Summarize findings and confirm completion with the user.
   - Return to requirements clarification (if new questions emerged)
   - Proceed to design (if research is complete)
   - Conduct additional research on new topics
+- If user chooses to proceed to design, you MUST use your 'design' SKILL against the requirements document to create a detailed design document
 - You MUST NOT automatically proceed to the next step without explicit user direction
 
 ## Key Principles
