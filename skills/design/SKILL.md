@@ -8,7 +8,7 @@ when_to_use: "When you need to create a detailed technical design from requireme
 Develop a comprehensive design document that consolidates requirements and research into a detailed technical design with architecture, components, data models, and implementation guidance.
 
 ## Parameters
-- requirements_source (required) - Path to the requirements document (e.g., `{project_dir}/requirements-elaboration.md` or `{project_dir}/idea-honing.md`)
+- requirements_source (required) - Path to the requirements document (e.g., `{project_dir}/requirements-elaboration.md`)
 - research_dir (optional) - Path to directory containing research findings (e.g., `{project_dir}/research/`)
 - project_dir (optional, default: derived from requirements_source parent directory) - The directory where the design document will be stored
 

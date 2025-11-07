@@ -41,6 +41,17 @@ Guide the user through a series of questions to refine the initial idea and deve
 - You MUST ensure you have the user's complete response before recording it and moving to the next question
 - You MUST continue asking questions until sufficient detail is gathered
 - You SHOULD ask about edge cases, user experience, technical constraints, and success criteria
+- You MUST collect technical context including but not limited to:
+  * Programming language and version requirements
+  * Primary frameworks and dependencies (e.g., FastAPI, React, etc.)
+  * Data storage requirements and preferred technologies
+  * Testing approach and tools
+  * Target deployment platform (AWS services, on-premises, mobile devices, etc.)
+  * Project type (web application, mobile app, API service, etc.)
+  * Performance requirements and constraints
+  * Expected scale and user load
+  * Integration requirements with existing systems
+  * Security and compliance requirements
 - You SHOULD adapt follow-up questions based on previous answers
 - You MAY suggest options when the user is unsure about a particular aspect
 - You MAY recognize when the requirements clarification process appears to have reached a natural conclusion
