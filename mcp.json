@@ -10,7 +10,7 @@
       "command": "npx",
       "args": ["-y", "@brave/brave-search-mcp-server"],
       "env": {
-        "BRAVE_API_KEY": "BSAN819fIJZMrNnSmOogR1AxOKqDIMx"
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
       }
     },
    "awslabs.aws-documentation-mcp-server": {
