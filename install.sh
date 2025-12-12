@@ -30,6 +30,7 @@ create_symlink() {
 [ -d "prompts" ] && create_symlink "$PWD/prompts" ~/.kiro/prompts
 [ -d "agent-scripts" ] && create_symlink "$PWD/agent-scripts" ~/.kiro/agent-scripts
 [ -d "skills" ] && create_symlink "$PWD/skills" ~/.kiro/skills
+[ -d "steering" ] && create_symlink "$PWD/steering" ~/.kiro/steering
 
 # Symlink q-skills script
 [ -f "q-skills" ] && create_symlink "$PWD/q-skills" ~/.kiro/q-skills

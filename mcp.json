@@ -4,14 +4,16 @@
       "command": "uvx",
       "args": [
         "mcp-server-fetch"
-      ]
+      ],
+      "disabled": true
     },
   "brave-search": {
       "command": "npx",
       "args": ["-y", "@brave/brave-search-mcp-server"],
       "env": {
         "BRAVE_API_KEY": "${BRAVE_API_KEY}"
-      }
+      },
+      "disabled": true
     },
    "awslabs.aws-documentation-mcp-server": {
       "command": "uvx",
@@ -20,7 +22,7 @@
         "FASTMCP_LOG_LEVEL": "ERROR",
         "AWS_DOCUMENTATION_PARTITION": "aws"
       },
-      "disabled": false,
+      "disabled": true,
       "autoApprove": []
     }, 
     "playwright": {
