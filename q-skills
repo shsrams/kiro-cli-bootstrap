@@ -25,29 +25,54 @@ extract_frontmatter() {
     fi
 }
 
-case "$1" in
-    "list")
-        echo "Available Q CLI Skills:"
-        echo "======================"
-        echo ""
-        
-        if [ ! -d "$SKILLS_DIR" ]; then
-            echo "No skills directory found at $SKILLS_DIR"
-            exit 0
-        fi
-        
+list_skills() {
+    local skills_to_show=("$@")
+    
+    if [ ${#skills_to_show[@]} -eq 0 ]; then
+        # No filter - show all skills
         for skill_dir in "$SKILLS_DIR"/*; do
             if [ -d "$skill_dir" ] && [ -f "$skill_dir/SKILL.md" ]; then
-                skill_name=$(basename "$skill_dir")
-                description=$(extract_frontmatter "$skill_dir/SKILL.md" "description")
-                when_to_use=$(extract_frontmatter "$skill_dir/SKILL.md" "when_to_use")
-                
-                echo "$skill_name"
-                [ -n "$description" ] && echo "  $description"
-                [ -n "$when_to_use" ] && echo "  When to use: $when_to_use"
-                echo ""
+                skills_to_show+=($(basename "$skill_dir"))
             fi
         done
+    fi
+    
+    for skill in "${skills_to_show[@]}"; do
+        skill_dir="$SKILLS_DIR/$skill"
+        if [ -d "$skill_dir" ] && [ -f "$skill_dir/SKILL.md" ]; then
+            description=$(extract_frontmatter "$skill_dir/SKILL.md" "description")
+            when_to_use=$(extract_frontmatter "$skill_dir/SKILL.md" "when_to_use")
+            
+            echo "$skill"
+            [ -n "$description" ] && echo "  $description"
+            [ -n "$when_to_use" ] && echo "  When to use: $when_to_use"
+            echo ""
+        fi
+    done
+}
+
+case "$1" in
+    "list")
+        if [ "$2" = "--skills" ] && [ -n "$3" ]; then
+            echo "Available Agent Skills:"
+            echo "======================"
+            echo ""
+            
+            # Parse comma-separated skills list
+            IFS=',' read -ra SKILL_ARRAY <<< "$3"
+            list_skills "${SKILL_ARRAY[@]}"
+        else
+            echo "Available Q CLI Skills:"
+            echo "======================"
+            echo ""
+            
+            if [ ! -d "$SKILLS_DIR" ]; then
+                echo "No skills directory found at $SKILLS_DIR"
+                exit 0
+            fi
+            
+            list_skills
+        fi
         
         echo "Usage: q-skills use <skill-name> to load a skill"
         ;;

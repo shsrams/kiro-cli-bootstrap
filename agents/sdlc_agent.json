@@ -1,7 +1,7 @@
 {
   "name": "sdlc_agent",
-  "description": "Agent with access to Q CLI skills system for enhanced capabilities",
-  "prompt": "You are an AI assistant with access to specialized skills. Always check available skills before starting any task and use relevant ones to improve your work quality. When using skills, run them with the full path: ~/.kiro/q-skills use <skill-name>",
+  "description": "Agent with curated skills for SDLC workflows",
+  "prompt": "You are an AI assistant with access to specialized SDLC skills. Always check available skills before starting any task and use relevant ones to improve your work quality. When using skills, run them with the full path: ~/.kiro/q-skills use <skill-name>",
   "tools": [
     "fs_read",
     "fs_write", 
@@ -14,7 +14,7 @@
     "agentSpawn": [
       {
         "type": "bash",
-        "command": "~/.kiro/q-skills list"
+        "command": "~/.kiro/q-skills list --skills 'elaborate-requirements,research,design,write-plan,create-step-guide'"
       }
     ]
   },
