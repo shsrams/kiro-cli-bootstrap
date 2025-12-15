@@ -1,37 +1,40 @@
 #!/bin/bash
 
-mkdir -p ~/.aws/amazonq
+mkdir -p ~/.kiro/settings
 
-# Copy mcp.json if it exists
-if [ -f "mcp.json" ]; then
-    cp mcp.json ~/.aws/amazonq/
-    echo "Copied mcp.json to ~/.aws/amazonq/"
-fi
-
-# Create symlink for q-skills script
-if [ -f "q-skills" ]; then
-    ln -sf "$PWD/q-skills" ~/.aws/amazonq/q-skills
-    echo "Created symlink: ~/.aws/amazonq/q-skills -> $PWD/q-skills"
-fi
-
-for dir in */; do
-    if [ -d "$dir" ]; then
-        dirname=$(basename "$dir")
-        target="$HOME/.aws/amazonq/$dirname"
-        
-        if [ -e "$target" ]; then
-            echo "Target $target already exists."
-            read -p "Do you want to remove it and create a symlink? (y/N): " confirm
-            if [[ $confirm =~ ^[Yy]$ ]]; then
-                rm -rf "$target"
-                ln -sf "$PWD/$dirname" "$target"
-                echo "Created symlink: $target -> $PWD/$dirname"
-            else
-                echo "Skipped $dirname"
-            fi
+create_symlink() {
+    local src="$1"
+    local dest="$2"
+    local name=$(basename "$dest")
+    
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
+        read -p "$dest exists. Replace with symlink? (y/N): " confirm
+        if [[ $confirm =~ ^[Yy]$ ]]; then
+            rm -rf "$dest"
+            ln -sf "$src" "$dest"
+            echo "Created symlink: $dest -> $src"
         else
-            ln -sf "$PWD/$dirname" "$target"
-            echo "Created symlink: $target -> $PWD/$dirname"
+            echo "Skipped $name"
         fi
+    else
+        ln -sf "$src" "$dest"
+        echo "Created symlink: $dest -> $src"
     fi
-done
+}
+
+# Symlink mcp.json to settings
+[ -f "mcp.json" ] && create_symlink "$PWD/mcp.json" ~/.kiro/settings/mcp.json
+
+# Symlink directories
+[ -d "agents" ] && create_symlink "$PWD/agents" ~/.kiro/agents
+[ -d "prompts" ] && create_symlink "$PWD/prompts" ~/.kiro/prompts
+[ -d "agent-scripts" ] && create_symlink "$PWD/agent-scripts" ~/.kiro/agent-scripts
+[ -d "skills" ] && create_symlink "$PWD/skills" ~/.kiro/skills
+[ -d "steering" ] && create_symlink "$PWD/steering" ~/.kiro/steering
+
+# Symlink q-skills script
+[ -f "q-skills" ] && create_symlink "$PWD/q-skills" ~/.kiro/q-skills
+
+echo ""
+echo "Installation complete!"
+echo "All directories symlinked to ~/.kiro/ - new files will be automatically available"

@@ -16,7 +16,7 @@
     "file://AmazonQ.md",
     "file://README.md",
     "file://.amazonq/rules/**/*.md",
-    "file://~/.aws/amazonq/agent-scripts/guide.creation.process.md"
+    "file://~/.kiro/agent-scripts/guide.creation.process.md"
   ],
   "hooks": {
     "agentSpawn": [

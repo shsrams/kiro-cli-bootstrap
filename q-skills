@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# Get the directory where this script is located
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SKILLS_DIR="$SCRIPT_DIR/skills"
+# Skills directory is always at ~/.kiro/skills
+SKILLS_DIR="$HOME/.kiro/skills"
 
 extract_frontmatter() {
     local file="$1"
